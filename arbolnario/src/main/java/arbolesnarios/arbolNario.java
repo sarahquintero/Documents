@@ -2,10 +2,10 @@ package arbolesnarios;
 
 public class arbolNario {
 
-    public static nodoNario raiz;
+    public nodoNario raiz;
 
     public arbolNario(int valorRaiz, int maxHijos) {
-        arbolNario.raiz = new nodoNario(valorRaiz, maxHijos);
+        this.raiz = new nodoNario(valorRaiz, maxHijos);
     }
 
     public void recorrerEnPreOrden(nodoNario nodo) {
@@ -26,5 +26,5 @@ public class arbolNario {
             }
         }
     }
-    
+
 }
