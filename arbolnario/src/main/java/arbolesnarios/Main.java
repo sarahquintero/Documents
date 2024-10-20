@@ -13,67 +13,71 @@ public class Main {
         int maxHijos = input.nextInt();
         arbolNario AN = new arbolNario(valorRaiz, maxHijos);
         System.out.println("Árbol creado.");
+        int opcion = 0;
 
-        System.out.println("\nMenu:");
-        System.out.println("1. Agregar nodo.");
-        System.out.println("2. Eliminar nodo.");
-        System.out.println("3. Buscar nodo.");
-        System.out.println("4. Salir.");
-        System.out.print("Selecciona una opción: ");
-        int opcion = input.nextInt();
+        while (opcion != 4) {
+            System.out.println("\nMenu:");
+            System.out.println("1. Agregar nodo.");
+            System.out.println("2. Eliminar nodo.");
+            System.out.println("3. Buscar nodo.");
+            System.out.println("4. Salir.");
+            System.out.print("Selecciona una opción: ");
+            opcion = input.nextInt();
 
-        switch (opcion) {
-            case 1:
-                System.out.print("Introduce el valor del nuevo nodo: ");
-                int valorHijo = input.nextInt();
+            switch (opcion) {
+                case 1:
+                    System.out.print("Introduce el valor del nuevo nodo: ");
+                    int valorHijo = input.nextInt();
 
-                System.out.print("Introduce el número máximo de hijos para el nuevo nodo: ");
-                int maxHijosNuevo = input.nextInt();
-                nodoNario nuevoNodo = new nodoNario(valorHijo, maxHijosNuevo);
+                    System.out.print("Introduce el número máximo de hijos para el nuevo nodo: ");
+                    int maxHijosNuevo = input.nextInt();
+                    nodoNario nuevoNodo = new nodoNario(valorHijo, maxHijosNuevo);
 
-                if (AN.raiz.numHijos > 0) {
-                    AN.raiz.hijos[0].agregarHijo(nuevoNodo);
-                    System.out.println("Nodo agregado como hijo del primer hijo de la raíz.");
-                } else {
-                    // Si no hay hijos, se puede agregar a la raíz o manejarlo de otra forma
-                    AN.raiz.agregarHijo(nuevoNodo);
-                    System.out.println("No había hijos, se agregó a la raíz.");
-                }
-                AN.recorrerConSimbolos(AN.raiz, ""); // Mostrar el árbol después de agregar
-                break;
+                    if (AN.raiz.numHijos > 0) {
+                        AN.raiz.hijos[0].agregarHijo(nuevoNodo);
+                        System.out.println("Nodo agregado como hijo del primer hijo de la raíz.");
+                    } else {
+                        // Si no hay hijos, se puede agregar a la raíz o manejarlo de otra forma
+                        AN.raiz.agregarHijo(nuevoNodo);
+                        System.out.println("No había hijos, se agregó a la raíz.");
+                    }
+                    AN.recorrerConSimbolos(AN.raiz, ""); // Mostrar el árbol después de agregar
+                    break;
 
-            case 2:
-                System.out.print("Introduce el valor del nodo a eliminar: ");
-                int valorEliminar = input.nextInt();
-                AN.raiz.eliminarNodo(valorEliminar);
-                AN.recorrerConSimbolos(AN.raiz, "");
-                break;
+                case 2:
+                    System.out.print("Introduce el valor del nodo a eliminar: ");
+                    int valorEliminar = input.nextInt();
+                    AN.raiz.eliminarNodo(valorEliminar);
+                    AN.recorrerConSimbolos(AN.raiz, "");
+                    break;
 
-            case 3:
-                System.out.print("Introduce el valor del nodo a buscar: ");
-                int valorBuscar = input.nextInt();
-                AN.raiz.buscarNodo(valorBuscar);
-                break;
+                case 3:
+                    System.out.print("Introduce el valor del nodo a buscar: ");
+                    int valorBuscar = input.nextInt();
+                    AN.raiz.buscarNodo(valorBuscar);
+                    break;
 
-            case 4:
-                System.out.println("Recorrer en preorden.");
-                AN.recorrerEnPreOrden(AN.raiz);
-                break;
+                case 4:
+                    System.out.println("Recorrer en preorden.");
+                    AN.recorrerEnPreOrden(AN.raiz);
+                    break;
 
-            case 5:
-                System.out.println("Recorrer son simbolos.");
-                System.out.print("Introduzca el prefijo: ");
-                String prefijo = input.nextLine();
-                AN.recorrerConSimbolos(AN.raiz, prefijo);
-                break;
+                case 5:
+                    System.out.println("Recorrer son simbolos.");
+                    System.out.print("Introduzca el prefijo: ");
+                    String prefijo = input.nextLine();
+                    AN.recorrerConSimbolos(AN.raiz, prefijo);
+                    break;
 
-            case 6:
-                System.out.println("Saliendo...");
-                input.close();
-                return;
+                case 6:
+                    System.out.println("Saliendo...");
+                    input.close();
+                    return;
 
-            default:
-                System.out.println("Opción no válida. Inténtalo de nuevo.");
+                default:
+                    System.out.println("Opción no válida. Inténtalo de nuevo.");
+            }
         }
     }
+
 }
