@@ -50,7 +50,6 @@ public class nodoNario {
         if (this.valorNodo == valorBuscado) {
             return this; // Nodo encontrado
         }
-    
         for (int i = 0; i < numHijos; i++) {
             if (hijos[i] != null && hijos[i].buscarNodo(valorBuscado) != null) {
                 return hijos[i].buscarNodo(valorBuscado);
