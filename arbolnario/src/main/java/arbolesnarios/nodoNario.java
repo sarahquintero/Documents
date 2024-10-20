@@ -56,7 +56,6 @@ public class nodoNario {
                 return hijos[i].buscarNodo(valorBuscado);
             }
         }
-    
         return null; // Nodo no encontrado
     }
 }

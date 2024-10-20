@@ -15,10 +15,10 @@ public class Main {
         System.out.println("Árbol creado.");
 
         System.out.println("\nMenu:");
-        System.out.println("1. Agregar hijo");
-        System.out.println("2. Recorrer en preorden");
-        System.out.println("3. Recorrer con símbolos");
-        System.out.println("4. Salir");
+        System.out.println("1. Agregar nodo.");
+        System.out.println("2. Eliminar nodo.");
+        System.out.println("3. Buscar nodo.");
+        System.out.println("4. Salir.");
         System.out.print("Selecciona una opción: ");
         int opcion = input.nextInt();
 
@@ -56,6 +56,18 @@ public class Main {
                 break;
 
             case 4:
+                System.out.println("Recorrer en preorden.");
+                AN.recorrerEnPreOrden(AN.raiz);
+                break;
+
+            case 5:
+                System.out.println("Recorrer son simbolos.");
+                System.out.print("Introduzca el prefijo: ");
+                String prefijo = input.nextLine();
+                AN.recorrerConSimbolos(AN.raiz, prefijo);
+                break;
+
+            case 6:
                 System.out.println("Saliendo...");
                 input.close();
                 return;
