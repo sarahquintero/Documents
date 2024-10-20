@@ -7,7 +7,7 @@ public class Main {
 
         Scanner input = new Scanner(System.in);
         System.out.println("ARBOLES N-ARIOS");
-        System.out.print("Introduce el valor de la raíz: ");
+        System.out.print("\nIntroduce el valor de la raíz: ");
         int valorRaiz = input.nextInt();
         System.out.print("Introduce el número máximo de hijos: ");
         int maxHijos = input.nextInt();
@@ -21,6 +21,8 @@ public class Main {
             System.out.println("2. Eliminar nodo.");
             System.out.println("3. Buscar nodo.");
             System.out.println("4. Salir.");
+            System.out.println("5. Recorrer son simbolos.");
+            System.out.println("6. Salir.");
             System.out.print("Selecciona una opción: ");
             opcion = input.nextInt();
 
@@ -29,9 +31,9 @@ public class Main {
                     System.out.print("Introduce el valor del nuevo nodo: ");
                     int valorHijo = input.nextInt();
 
-                    System.out.print("Introduce el número máximo de hijos para el nuevo nodo: ");
-                    int maxHijosNuevo = input.nextInt();
-                    nodoNario nuevoNodo = new nodoNario(valorHijo, maxHijosNuevo);
+                    //System.out.print("Introduce el número máximo de hijos para el nuevo nodo: ");
+                    //int maxHijosNuevo = input.nextInt();
+                    nodoNario nuevoNodo = new nodoNario(valorHijo, maxHijos);
 
                     if (AN.raiz.numHijos > 0) {
                         AN.raiz.hijos[0].agregarHijo(nuevoNodo);

@@ -48,6 +48,7 @@ public class nodoNario {
 
     public nodoNario buscarNodo(int valorBuscado) {
         if (this.valorNodo == valorBuscado) {
+            System.out.println("Nodo encontrado.");
             return this; // Nodo encontrado
         }
         for (int i = 0; i < numHijos; i++) {
@@ -55,6 +56,7 @@ public class nodoNario {
                 return hijos[i].buscarNodo(valorBuscado);
             }
         }
+        System.out.println("Nodo no encontrado.");
         return null; // Nodo no encontrado
     }
 }
