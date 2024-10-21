@@ -30,19 +30,10 @@ public class Main {
                 case 1:
                     System.out.print("Introduce el valor del nuevo nodo: ");
                     int valorHijo = input.nextInt();
-
                     //System.out.print("Introduce el número máximo de hijos para el nuevo nodo: ");
                     //int maxHijosNuevo = input.nextInt();
                     nodoNario nuevoNodo = new nodoNario(valorHijo, maxHijos);
-
-                    if (AN.raiz.numHijos > 0) {
-                        AN.raiz.hijos[0].agregarHijo(nuevoNodo);
-                        System.out.println("Nodo agregado como hijo del primer hijo de la raíz.");
-                    } else {
-                        // Si no hay hijos, se puede agregar a la raíz o manejarlo de otra forma
-                        AN.raiz.agregarHijo(nuevoNodo);
-                        System.out.println("No había hijos, se agregó a la raíz.");
-                    }
+                    AN.raiz.agregarHijo(nuevoNodo);
                     AN.recorrerConSimbolos(AN.raiz, ""); // Mostrar el árbol después de agregar
                     break;
 

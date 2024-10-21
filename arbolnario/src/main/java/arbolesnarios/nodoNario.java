@@ -13,12 +13,23 @@ public class nodoNario {
         this.hijos = new nodoNario[maxHijos];
     }
 
-    public void agregarHijo(nodoNario hijo) {
-        if (numHijos < maxHijos) {
-            hijos[numHijos] = hijo;
-            numHijos++;
+    public void agregarHijo(nodoNario nuevoHijo) {
+        if (this.numHijos < this.maxHijos) {
+            this.hijos[this.numHijos] = nuevoHijo;
+            this.numHijos++;
         } else {
-            System.out.println("Ya se alcanzo el numero maximo de hijos.");
+            // Buscar un hijo con espacio y agregar allí
+            for (int i = 0; i < this.numHijos; i++) {
+                if (this.hijos[i].numHijos < this.hijos[i].maxHijos) {
+                    this.hijos[i].agregarHijo(nuevoHijo);
+                    return;
+                }
+            }
+            // Si ningún hijo tiene espacio, se puede manejar de diferentes formas:
+            // 1. Ignorar el nuevo nodo
+            // 2. Redimensionar el vector de hijos (no recomendado si se quiere un tamaño fijo)
+            // 3. Implementar una estrategia de rebalanceo
+            System.out.println("No hay espacio para el nuevo nodo");
         }
     }
 
