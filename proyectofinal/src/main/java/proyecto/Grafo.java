@@ -41,8 +41,6 @@ public class Grafo {
         }
     }
 
-    // Métodos para cargar desde archivo y guardar en archivo se agregarán más tarde
-
     public int[] dijkstra(int inicio) {
         int[] distancias = new int[numNodos];
         boolean[] visitados = new boolean[numNodos];

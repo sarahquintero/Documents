@@ -28,7 +28,7 @@ public class InterfazGrafo extends JFrame {
 
     public InterfazGrafo() {
         setTitle("Administrador de Grafos");
-        setSize(800, 600);
+        setSize(1000, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
