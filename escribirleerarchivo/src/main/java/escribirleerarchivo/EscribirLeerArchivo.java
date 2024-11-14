@@ -24,7 +24,7 @@ public class EscribirLeerArchivo extends JFrame {
         JPanel panelSuperior = new JPanel();
         panelSuperior.setLayout(new FlowLayout());
     
-        campoTexto = new JTextField(20);
+        campoTexto = new JTextField(15);
         botonEscribir = new JButton("Agregar y Escribir");
         botonLeer = new JButton("Leer Archivo");
         botonBorrar = new JButton("Borrar Archivo");
