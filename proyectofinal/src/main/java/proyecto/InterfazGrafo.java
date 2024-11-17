@@ -27,8 +27,16 @@ public class InterfazGrafo extends JFrame {
     private JScrollPane scrollPaneTabla;
 
     public InterfazGrafo() {
-        // Inicializa el grafo con un tamaño predeterminado y tipo
-        grafo = new Grafo(10, true); // Ejemplo de inicialización, puedes modificar según tus necesidades
+        // Pedir al usuario el tamaño del grafo
+        String tamanoStr = JOptionPane.showInputDialog(this, "Ingrese el tamaño del grafo (número de nodos):");
+        int tamano = Integer.parseInt(tamanoStr);
+    
+        // Pedir al usuario si el grafo es dirigido o no
+        int respuesta = JOptionPane.showConfirmDialog(this, "¿El grafo es dirigido?", "Tipo de Grafo", JOptionPane.YES_NO_OPTION);
+        boolean dirigido = (respuesta == JOptionPane.YES_OPTION);
+    
+        // Inicializar el grafo con los valores dados por el usuario
+        grafo = new Grafo(tamano, dirigido);
     
         setTitle("Administrador de Grafos");
         setSize(1000, 600);
@@ -38,7 +46,7 @@ public class InterfazGrafo extends JFrame {
         JPanel panelSuperior = new JPanel();
         panelSuperior.setLayout(new FlowLayout());
     
-        tipoGrafoComboBox = new JComboBox<>(new String[] { "Dirigido", "No Dirigido" });
+        //tipoGrafoComboBox = new JComboBox<>(new String[] { "Dirigido", "No Dirigido" });
         nodoOrigenTextField = new JTextField(5);
         nodoDestinoTextField = new JTextField(5);
         pesoTextField = new JTextField(5);
@@ -53,8 +61,8 @@ public class InterfazGrafo extends JFrame {
         resultadosTextArea.setEditable(false);
         JScrollPane scrollPaneResultados = new JScrollPane(resultadosTextArea);
     
-        panelSuperior.add(new JLabel("Tipo de Grafo:"));
-        panelSuperior.add(tipoGrafoComboBox);
+        //panelSuperior.add(new JLabel("Tipo de Grafo:"));
+        //panelSuperior.add(tipoGrafoComboBox);
         panelSuperior.add(new JLabel("Nodo Origen:"));
         panelSuperior.add(nodoOrigenTextField);
         panelSuperior.add(new JLabel("Nodo Destino:"));
