@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Color;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -16,6 +17,9 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import javax.swing.table.DefaultTableModel;
 
 public class InterfazGrafo extends JFrame {
@@ -27,42 +31,66 @@ public class InterfazGrafo extends JFrame {
     private JScrollPane scrollPaneTabla;
 
     public InterfazGrafo() {
+
+        try {
+            UIManager.setLookAndFeel(new NimbusLookAndFeel());
+            UIManager.put("control", new Color(43, 43, 43));
+            UIManager.put("info", new Color(43, 43, 43));
+            UIManager.put("nimbusBase", new Color(18, 30, 49));
+            UIManager.put("nimbusAlertYellow", new Color(248, 187, 0));
+            UIManager.put("nimbusDisabledText", new Color(128, 128, 128));
+            UIManager.put("nimbusFocus", new Color(115, 164, 209));
+            UIManager.put("nimbusGreen", new Color(176, 179, 50));
+            UIManager.put("nimbusInfoBlue", new Color(66, 139, 221));
+            UIManager.put("nimbusLightBackground", new Color(18, 30, 49));
+            UIManager.put("nimbusOrange", new Color(191, 98, 4));
+            UIManager.put("nimbusRed", new Color(169, 46, 34));
+            UIManager.put("nimbusSelectedText", new Color(255, 255, 255));
+            UIManager.put("nimbusSelectionBackground", new Color(104, 93, 156));
+            UIManager.put("text", new Color(230, 230, 230));
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+
+        }
         // Pedir al usuario el tamaño del grafo
-        String tamanoStr = JOptionPane.showInputDialog(this, "Ingrese el tamaño del grafo (número de nodos):");
+        String tamanoStr = JOptionPane.showInputDialog(this, "Ingrese el tamaño del grafo (número de nodos):","Número de Nodos", JOptionPane.QUESTION_MESSAGE);
         int tamano = Integer.parseInt(tamanoStr);
-    
+
         // Pedir al usuario si el grafo es dirigido o no
-        int respuesta = JOptionPane.showConfirmDialog(this, "¿El grafo es dirigido?", "Tipo de Grafo", JOptionPane.YES_NO_OPTION);
+        int respuesta = JOptionPane.showConfirmDialog(this, "¿El grafo es dirigido?", "Tipo de Grafo",
+                JOptionPane.YES_NO_OPTION);
         boolean dirigido = (respuesta == JOptionPane.YES_OPTION);
-    
+
         // Inicializar el grafo con los valores dados por el usuario
         grafo = new Grafo(tamano, dirigido);
-    
+
         setTitle("Administrador de Grafos");
         setSize(1000, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-    
+
         JPanel panelSuperior = new JPanel();
         panelSuperior.setLayout(new FlowLayout());
-    
-        //tipoGrafoComboBox = new JComboBox<>(new String[] { "Dirigido", "No Dirigido" });
+
+        tipoGrafoComboBox = new JComboBox<>(new String[] { "Dirigido", "No Dirigido"});
         nodoOrigenTextField = new JTextField(5);
         nodoDestinoTextField = new JTextField(5);
         pesoTextField = new JTextField(5);
-    
+
         JButton agregarAristaButton = new JButton("Agregar Arista");
         JButton cargarArchivoButton = new JButton("Cargar Archivo");
         JButton guardarResultadosButton = new JButton("Guardar Resultados");
         JButton ejecutarDijkstraButton = new JButton("Ejecutar Dijkstra");
         JButton ejecutarFloydWarshallButton = new JButton("Ejecutar Floyd-Warshall");
-    
+
         resultadosTextArea = new JTextArea(15, 50);
         resultadosTextArea.setEditable(false);
+        resultadosTextArea.setBackground(new Color(43, 43, 43));
+        resultadosTextArea.setForeground(new Color(230, 230, 230));
         JScrollPane scrollPaneResultados = new JScrollPane(resultadosTextArea);
-    
-        //panelSuperior.add(new JLabel("Tipo de Grafo:"));
-        //panelSuperior.add(tipoGrafoComboBox);
+
+        // panelSuperior.add(new JLabel("Tipo de Grafo:"));
+        // panelSuperior.add(tipoGrafoComboBox);
         panelSuperior.add(new JLabel("Nodo Origen:"));
         panelSuperior.add(nodoOrigenTextField);
         panelSuperior.add(new JLabel("Nodo Destino:"));
@@ -74,49 +102,49 @@ public class InterfazGrafo extends JFrame {
         panelSuperior.add(guardarResultadosButton);
         panelSuperior.add(ejecutarDijkstraButton);
         panelSuperior.add(ejecutarFloydWarshallButton);
-    
+
         tablaGrafo = new JTable();
         scrollPaneTabla = new JScrollPane(tablaGrafo);
-    
+
         add(panelSuperior, BorderLayout.NORTH);
         add(scrollPaneResultados, BorderLayout.CENTER);
         add(scrollPaneTabla, BorderLayout.SOUTH);
-    
+
         agregarAristaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 agregarArista();
             }
         });
-    
+
         cargarArchivoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cargarArchivo();
             }
         });
-    
+
         guardarResultadosButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 guardarResultados();
             }
         });
-    
+
         ejecutarDijkstraButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ejecutarDijkstra();
             }
         });
-    
+
         ejecutarFloydWarshallButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ejecutarFloydWarshall();
             }
         });
-    }    
+    }
 
     private void agregarArista() {
         try {

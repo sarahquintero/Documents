@@ -110,14 +110,14 @@ public class Grafo {
         try (BufferedReader lector = new BufferedReader(new FileReader(nombreArchivo))) {
             String tipoGrafo = lector.readLine().trim();
             dirigido = tipoGrafo.equalsIgnoreCase("dirigido");
-
+    
             String linea;
             while ((linea = lector.readLine()) != null) {
                 String[] partes = linea.split(" ");
                 int origen = Integer.parseInt(partes[0]);
                 int destino = Integer.parseInt(partes[1]);
                 int peso = Integer.parseInt(partes[2]);
-
+    
                 agregarArista(origen, destino, peso);
             }
             JOptionPane.showMessageDialog(null, "Grafo cargado desde archivo.");
@@ -128,13 +128,15 @@ public class Grafo {
             JOptionPane.showMessageDialog(null, "Formato de archivo incorrecto.");
             e.printStackTrace();
         }
-    }
+    }    
 
     public void guardarResultadosEnArchivo(String nombreArchivo, int[] distancias, int origen) {
         try (FileWriter escritor = new FileWriter(nombreArchivo)) {
             escritor.write("Distancias mínimas desde el nodo " + origen + ":\n");
             for (int i = 0; i < distancias.length; i++) {
-                escritor.write("Nodo " + origen + " a Nodo " + i + " : " + distancias[i] + "\n");
+                String linea = "Nodo " + origen + " a Nodo " + i + " : " + distancias[i];
+                System.out.println(linea); // Línea de depuración
+                escritor.write(linea + "\n");
             }
             JOptionPane.showMessageDialog(null, "Resultados guardados en el archivo.");
         } catch (IOException e) {
@@ -148,12 +150,11 @@ public class Grafo {
             escritor.write("Matriz de distancias mínimas:\n");
             for (int i = 0; i < distancias.length; i++) {
                 for (int j = 0; j < distancias[i].length; j++) {
-                    if (distancias[i][j] == Integer.MAX_VALUE) {
-                        escritor.write("INF ");
-                    } else {
-                        escritor.write(distancias[i][j] + " ");
-                    }
+                    String valor = (distancias[i][j] == Integer.MAX_VALUE) ? "INF " : distancias[i][j] + " ";
+                    System.out.print(valor); // Línea de depuración
+                    escritor.write(valor);
                 }
+                System.out.println(); // Línea de depuración
                 escritor.write("\n");
             }
             JOptionPane.showMessageDialog(null, "Resultados guardados en el archivo.");
