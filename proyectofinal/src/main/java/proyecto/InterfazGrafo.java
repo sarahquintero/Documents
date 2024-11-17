@@ -27,29 +27,32 @@ public class InterfazGrafo extends JFrame {
     private JScrollPane scrollPaneTabla;
 
     public InterfazGrafo() {
+        // Inicializa el grafo con un tamaño predeterminado y tipo
+        grafo = new Grafo(10, true); // Ejemplo de inicialización, puedes modificar según tus necesidades
+    
         setTitle("Administrador de Grafos");
         setSize(1000, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-
+    
         JPanel panelSuperior = new JPanel();
         panelSuperior.setLayout(new FlowLayout());
-
+    
         tipoGrafoComboBox = new JComboBox<>(new String[] { "Dirigido", "No Dirigido" });
         nodoOrigenTextField = new JTextField(5);
         nodoDestinoTextField = new JTextField(5);
         pesoTextField = new JTextField(5);
-
+    
         JButton agregarAristaButton = new JButton("Agregar Arista");
         JButton cargarArchivoButton = new JButton("Cargar Archivo");
         JButton guardarResultadosButton = new JButton("Guardar Resultados");
         JButton ejecutarDijkstraButton = new JButton("Ejecutar Dijkstra");
         JButton ejecutarFloydWarshallButton = new JButton("Ejecutar Floyd-Warshall");
-
+    
         resultadosTextArea = new JTextArea(15, 50);
         resultadosTextArea.setEditable(false);
         JScrollPane scrollPaneResultados = new JScrollPane(resultadosTextArea);
-
+    
         panelSuperior.add(new JLabel("Tipo de Grafo:"));
         panelSuperior.add(tipoGrafoComboBox);
         panelSuperior.add(new JLabel("Nodo Origen:"));
@@ -63,57 +66,69 @@ public class InterfazGrafo extends JFrame {
         panelSuperior.add(guardarResultadosButton);
         panelSuperior.add(ejecutarDijkstraButton);
         panelSuperior.add(ejecutarFloydWarshallButton);
-
+    
         tablaGrafo = new JTable();
         scrollPaneTabla = new JScrollPane(tablaGrafo);
-
+    
         add(panelSuperior, BorderLayout.NORTH);
         add(scrollPaneResultados, BorderLayout.CENTER);
         add(scrollPaneTabla, BorderLayout.SOUTH);
-
+    
         agregarAristaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 agregarArista();
             }
         });
-
+    
         cargarArchivoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cargarArchivo();
             }
         });
-
+    
         guardarResultadosButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 guardarResultados();
             }
         });
-
+    
         ejecutarDijkstraButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ejecutarDijkstra();
             }
         });
-
+    
         ejecutarFloydWarshallButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ejecutarFloydWarshall();
             }
         });
-    }
+    }    
 
     private void agregarArista() {
-        int origen = Integer.parseInt(nodoOrigenTextField.getText());
-        int destino = Integer.parseInt(nodoDestinoTextField.getText());
-        int peso = Integer.parseInt(pesoTextField.getText());
-        grafo.agregarArista(origen, destino, peso);
-        resultadosTextArea.append("Arista agregada: " + origen + " -> " + destino + " con peso " + peso + "\n");
-        actualizarTablaGrafo();
+        try {
+            int origen = Integer.parseInt(nodoOrigenTextField.getText().trim());
+            int destino = Integer.parseInt(nodoDestinoTextField.getText().trim());
+            int peso = Integer.parseInt(pesoTextField.getText().trim());
+
+            if (origen < 0 || destino < 0 || peso < 0) {
+                throw new IllegalArgumentException("Los valores no pueden ser negativos");
+            }
+
+            grafo.agregarArista(origen, destino, peso);
+            resultadosTextArea.append("Arista agregada: " + origen + " -> " + destino + " con peso " + peso + "\n");
+            actualizarTablaGrafo();
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Por favor ingresa valores numéricos válidos.", "Error de Formato",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error de Valor", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void cargarArchivo() {

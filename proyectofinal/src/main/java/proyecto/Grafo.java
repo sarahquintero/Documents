@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 
 import javax.swing.JOptionPane;
 
@@ -44,12 +45,7 @@ public class Grafo {
     public int[] dijkstra(int inicio) {
         int[] distancias = new int[numNodos];
         boolean[] visitados = new boolean[numNodos];
-
-        for (int i = 0; i < numNodos; i++) {
-            distancias[i] = Integer.MAX_VALUE;
-            visitados[i] = false;
-        }
-
+        Arrays.fill(distancias, Integer.MAX_VALUE); // Inicializa todas las distancias a infinito
         distancias[inicio] = 0;
 
         for (int i = 0; i < numNodos; i++) {
@@ -128,6 +124,9 @@ public class Grafo {
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Error al cargar el grafo desde el archivo.");
             e.printStackTrace();
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Formato de archivo incorrecto.");
+            e.printStackTrace();
         }
     }
 
@@ -187,7 +186,4 @@ public class Grafo {
     public void setDirigido(boolean dirigido) {
         this.dirigido = dirigido;
     }
-
-    
 }
-
