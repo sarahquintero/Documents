@@ -43,25 +43,25 @@ public class Grafo {
     }
 
     public int[] dijkstra(int inicio) {
-        int[] distancias = new int[numNodos];
-        boolean[] visitados = new boolean[numNodos];
+        int[] distancias = new int[numNodos]; // Array para almacenar las distancias mínimas desde el nodo de inicio
+        boolean[] visitados = new boolean[numNodos]; // Array para rastrear qué nodos han sido visitados
         Arrays.fill(distancias, Integer.MAX_VALUE); // Inicializa todas las distancias a infinito
-        distancias[inicio] = 0;
+        distancias[inicio] = 0; // La distancia al nodo de inicio es 0
 
         for (int i = 0; i < numNodos; i++) {
-            int nodoMin = minDistancia(distancias, visitados);
-            visitados[nodoMin] = true;
+            int nodoMin = minDistancia(distancias, visitados); // Encuentra el nodo con la distancia mínima no visitado
+            visitados[nodoMin] = true; // Marca este nodo como visitado
 
+            // Actualiza las distancias de los nodos adyacentes
             for (int j = 0; j < numNodos; j++) {
-                if (!visitados[j] && matrizAdyacencia[nodoMin][j] != 0 &&
-                        distancias[nodoMin] != Integer.MAX_VALUE &&
-                        distancias[nodoMin] + matrizAdyacencia[nodoMin][j] < distancias[j]) {
-                    distancias[j] = distancias[nodoMin] + matrizAdyacencia[nodoMin][j];
+                if (!visitados[j] && matrizAdyacencia[nodoMin][j] != 0 && distancias[nodoMin] != Integer.MAX_VALUE
+                        && distancias[nodoMin] + matrizAdyacencia[nodoMin][j] < distancias[j]) {
+                    distancias[j] = distancias[nodoMin] + matrizAdyacencia[nodoMin][j]; // Actualiza la distancia
                 }
             }
         }
 
-        return distancias;
+        return distancias; // Retorna el array de distancias mínimas
     }
 
     private int minDistancia(int[] distancias, boolean[] visitados) {
@@ -110,14 +110,14 @@ public class Grafo {
         try (BufferedReader lector = new BufferedReader(new FileReader(nombreArchivo))) {
             String tipoGrafo = lector.readLine().trim();
             dirigido = tipoGrafo.equalsIgnoreCase("dirigido");
-    
+
             String linea;
             while ((linea = lector.readLine()) != null) {
                 String[] partes = linea.split(" ");
                 int origen = Integer.parseInt(partes[0]);
                 int destino = Integer.parseInt(partes[1]);
                 int peso = Integer.parseInt(partes[2]);
-    
+
                 agregarArista(origen, destino, peso);
             }
             JOptionPane.showMessageDialog(null, "Grafo cargado desde archivo.");
@@ -128,7 +128,7 @@ public class Grafo {
             JOptionPane.showMessageDialog(null, "Formato de archivo incorrecto.");
             e.printStackTrace();
         }
-    }    
+    }
 
     public void guardarResultadosEnArchivo(String nombreArchivo, int[] distancias, int origen) {
         try (FileWriter escritor = new FileWriter(nombreArchivo)) {
