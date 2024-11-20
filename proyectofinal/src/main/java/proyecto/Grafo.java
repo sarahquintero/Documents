@@ -11,7 +11,7 @@ public class Grafo {
     private int[][] matrizAdyacencia;
     private int numNodos;
     private boolean dirigido;
-    private int[] predecesores; // Arreglo de predecesores
+    private int[] predecesores; // Arreglo de predecesores para dijkstra
 
     public Grafo(int tamano, boolean dirigido) {
         this.matrizAdyacencia = new int[tamano][tamano];
@@ -128,21 +128,6 @@ public class Grafo {
             e.printStackTrace();
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Formato de archivo incorrecto.");
-            e.printStackTrace();
-        }
-    }
-
-    public void guardarResultadosEnArchivo(String nombreArchivo, int[] distancias, int origen) {
-        try (FileWriter escritor = new FileWriter(nombreArchivo)) {
-            escritor.write("Distancias mínimas desde el nodo " + origen + ":\n");
-            for (int i = 0; i < distancias.length; i++) {
-                String linea = "Nodo " + origen + " a Nodo " + i + " : " + distancias[i];
-                System.out.println(linea); // Línea de depuración
-                escritor.write(linea + "\n");
-            }
-            JOptionPane.showMessageDialog(null, "Resultados guardados en el archivo.");
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Error al guardar los resultados en el archivo.");
             e.printStackTrace();
         }
     }

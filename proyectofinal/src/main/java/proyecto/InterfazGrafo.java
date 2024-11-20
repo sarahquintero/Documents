@@ -75,9 +75,9 @@ public class InterfazGrafo extends JFrame {
         panelSuperior.setLayout(new FlowLayout());
 
         tipoGrafoComboBox = new JComboBox<>(new String[] { "Dirigido", "No Dirigido" });
-        nodoOrigenTextField = new JTextField(5);
-        nodoDestinoTextField = new JTextField(5);
-        pesoTextField = new JTextField(5);
+        nodoOrigenTextField = new JTextField(3);
+        nodoDestinoTextField = new JTextField(3);
+        pesoTextField = new JTextField(3);
 
         JButton agregarAristaButton = new JButton("Agregar Arista");
         JButton cargarArchivoButton = new JButton("Cargar Archivo");
