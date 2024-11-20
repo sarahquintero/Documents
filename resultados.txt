@@ -1,0 +1,4 @@
+Matriz de distancias mínimas:
+0 7 16 
+7 0 9 
+16 9 0 

@@ -5,13 +5,13 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
-
 import javax.swing.JOptionPane;
 
 public class Grafo {
     private int[][] matrizAdyacencia;
     private int numNodos;
     private boolean dirigido;
+    private int[] predecesores; // Arreglo de predecesores
 
     public Grafo(int tamano, boolean dirigido) {
         this.matrizAdyacencia = new int[tamano][tamano];
@@ -43,25 +43,27 @@ public class Grafo {
     }
 
     public int[] dijkstra(int inicio) {
-        int[] distancias = new int[numNodos]; // Array para almacenar las distancias mínimas desde el nodo de inicio
-        boolean[] visitados = new boolean[numNodos]; // Array para rastrear qué nodos han sido visitados
-        Arrays.fill(distancias, Integer.MAX_VALUE); // Inicializa todas las distancias a infinito
-        distancias[inicio] = 0; // La distancia al nodo de inicio es 0
+        int[] distancias = new int[numNodos];
+        predecesores = new int[numNodos];
+        boolean[] visitados = new boolean[numNodos];
+        Arrays.fill(distancias, Integer.MAX_VALUE);
+        Arrays.fill(predecesores, -1);
+        distancias[inicio] = 0;
 
         for (int i = 0; i < numNodos; i++) {
-            int nodoMin = minDistancia(distancias, visitados); // Encuentra el nodo con la distancia mínima no visitado
-            visitados[nodoMin] = true; // Marca este nodo como visitado
+            int nodoMin = minDistancia(distancias, visitados);
+            visitados[nodoMin] = true;
 
-            // Actualiza las distancias de los nodos adyacentes
             for (int j = 0; j < numNodos; j++) {
                 if (!visitados[j] && matrizAdyacencia[nodoMin][j] != 0 && distancias[nodoMin] != Integer.MAX_VALUE
                         && distancias[nodoMin] + matrizAdyacencia[nodoMin][j] < distancias[j]) {
-                    distancias[j] = distancias[nodoMin] + matrizAdyacencia[nodoMin][j]; // Actualiza la distancia
+                    distancias[j] = distancias[nodoMin] + matrizAdyacencia[nodoMin][j];
+                    predecesores[j] = nodoMin; // Actualiza el predecesor
                 }
             }
         }
 
-        return distancias; // Retorna el array de distancias mínimas
+        return distancias;
     }
 
     private int minDistancia(int[] distancias, boolean[] visitados) {
@@ -186,5 +188,9 @@ public class Grafo {
 
     public void setDirigido(boolean dirigido) {
         this.dirigido = dirigido;
+    }
+
+    public int[] getPredecesores() {
+        return predecesores;
     }
 }

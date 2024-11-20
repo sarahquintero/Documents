@@ -29,6 +29,7 @@ public class InterfazGrafo extends JFrame {
     private JTextArea resultadosTextArea;
     private JTable tablaGrafo;
     private JScrollPane scrollPaneTabla;
+    private JLabel tituloTabla;
 
     public InterfazGrafo() {
 
@@ -53,7 +54,8 @@ public class InterfazGrafo extends JFrame {
 
         }
         // Pedir al usuario el tamaño del grafo
-        String tamanoStr = JOptionPane.showInputDialog(this, "Ingrese el tamaño del grafo (número de nodos):","Número de Nodos", JOptionPane.QUESTION_MESSAGE);
+        String tamanoStr = JOptionPane.showInputDialog(this, "Ingrese el tamaño del grafo (número de nodos):",
+                "Número de Nodos", JOptionPane.QUESTION_MESSAGE);
         int tamano = Integer.parseInt(tamanoStr);
 
         // Pedir al usuario si el grafo es dirigido o no
@@ -72,7 +74,7 @@ public class InterfazGrafo extends JFrame {
         JPanel panelSuperior = new JPanel();
         panelSuperior.setLayout(new FlowLayout());
 
-        tipoGrafoComboBox = new JComboBox<>(new String[] { "Dirigido", "No Dirigido"});
+        tipoGrafoComboBox = new JComboBox<>(new String[] { "Dirigido", "No Dirigido" });
         nodoOrigenTextField = new JTextField(5);
         nodoDestinoTextField = new JTextField(5);
         pesoTextField = new JTextField(5);
@@ -103,12 +105,19 @@ public class InterfazGrafo extends JFrame {
         panelSuperior.add(ejecutarDijkstraButton);
         panelSuperior.add(ejecutarFloydWarshallButton);
 
+        tituloTabla = new JLabel("Matriz de Adyacencia");
+        tituloTabla.setHorizontalAlignment(JLabel.CENTER);
+
         tablaGrafo = new JTable();
         scrollPaneTabla = new JScrollPane(tablaGrafo);
+        JPanel panelTabla = new JPanel();
+        panelTabla.setLayout(new BorderLayout());
+        panelTabla.add(tituloTabla, BorderLayout.NORTH);
+        panelTabla.add(scrollPaneTabla, BorderLayout.CENTER);
 
         add(panelSuperior, BorderLayout.NORTH);
         add(scrollPaneResultados, BorderLayout.CENTER);
-        add(scrollPaneTabla, BorderLayout.SOUTH);
+        add(panelTabla, BorderLayout.SOUTH);
 
         agregarAristaButton.addActionListener(new ActionListener() {
             @Override
@@ -185,21 +194,47 @@ public class InterfazGrafo extends JFrame {
     private void ejecutarDijkstra() {
         int nodoOrigen = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese el nodo origen para Dijkstra:"));
         int[] distancias = grafo.dijkstra(nodoOrigen);
-        resultadosTextArea.append("Resultados de Dijkstra desde el nodo " + nodoOrigen + ":\n");
+        int[] predecesores = grafo.getPredecesores(); // Este método debe retornar el arreglo de predecesores.
+
+        resultadosTextArea.append(":\n" + "Resultados de Dijkstra desde el nodo " + nodoOrigen + ":\n");
         for (int i = 0; i < distancias.length; i++) {
             resultadosTextArea.append("Nodo " + nodoOrigen + " a Nodo " + i + " : " + distancias[i] + "\n");
+        }
+
+        // Imprimir el recorrido más corto para cada nodo
+        resultadosTextArea.append("\nRecorridos más cortos:\n");
+        for (int i = 0; i < distancias.length; i++) {
+            if (i != nodoOrigen) {
+                resultadosTextArea.append("Nodo " + nodoOrigen + " a Nodo " + i + " : ");
+                imprimirRecorrido(nodoOrigen, i, predecesores);
+                resultadosTextArea.append("\n");
+            }
+        }
+    }
+
+    // Método para imprimir el recorrido desde el nodo origen hasta el destino
+    // usando los predecesores
+    private void imprimirRecorrido(int origen, int destino, int[] predecesores) {
+        if (origen == destino) {
+            resultadosTextArea.append(String.valueOf(origen));
+        } else if (predecesores[destino] == -1) {
+            resultadosTextArea.append("No hay camino");
+        } else {
+            imprimirRecorrido(origen, predecesores[destino], predecesores);
+            resultadosTextArea.append(" -> " + destino);
         }
     }
 
     private void ejecutarFloydWarshall() {
         int[][] distancias = grafo.floydWarshall();
-        resultadosTextArea.append("Resultados de Floyd-Warshall:\n");
+        resultadosTextArea.append(":\n" + "Resultados de Floyd-Warshall:\n");
+
         for (int i = 0; i < distancias.length; i++) {
             for (int j = 0; j < distancias[i].length; j++) {
                 if (distancias[i][j] == Integer.MAX_VALUE) {
-                    resultadosTextArea.append("INF ");
+                    resultadosTextArea.append(String.format("%7s", "INF"));
                 } else {
-                    resultadosTextArea.append(distancias[i][j] + " ");
+                    resultadosTextArea.append(String.format("%7d", distancias[i][j]));
                 }
             }
             resultadosTextArea.append("\n");
