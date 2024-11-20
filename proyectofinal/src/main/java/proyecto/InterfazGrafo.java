@@ -153,6 +153,8 @@ public class InterfazGrafo extends JFrame {
                 ejecutarFloydWarshall();
             }
         });
+
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     private void agregarArista() {
